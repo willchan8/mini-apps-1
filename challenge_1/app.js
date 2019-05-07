@@ -4,8 +4,10 @@
 // the app detects a win or tie and displays an appropriate message
 // a button resets the game for a new round of gameplay
 
-// Each square is identified by the tag name 'td'
+// Each square is identified by the tag name 'td'. squares is the an of all square elements
 var squares = document.getElementsByTagName('td');
+
+// Reset button element
 var resetButton = document.getElementsByClassName('resetButton')[0];
 
 
