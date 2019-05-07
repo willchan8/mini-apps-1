@@ -8,23 +8,65 @@
 var squares = document.getElementsByTagName('td');
 var resetButton = document.getElementsByClassName('resetButton')[0];
 
+
 // Keep track of player's turn
 var playersTurn = {
   playerOne: true,
   playerTwo: false 
 };
 
+
 // Track the winner
 var winner = '';
 
-// Reset Game
-var resetGame = function () {
-  for (var i = 0; i < squares.length; i++) {
-    squares[i].innerHTML = '';
+
+// Callback for adding click event listener for each square and switching between each player's turn
+var callback = function () {
+  if (playersTurn.playerOne && this.innerHTML === '') {
+    this.innerHTML = 'X';
+    checkWin(squares, this.innerHTML);
+    if (winner) {
+      return;
+    }
+    playersTurn.playerOne = false;
+    playersTurn.playerTwo = true;
+  } 
+  else if (playersTurn.playerTwo === true && this.innerHTML === '') {
+    this.innerHTML = 'O';
+    checkWin(squares, this.innerHTML);
+    if (winner) {
+      return;
+    }
+    playersTurn.playerTwo = false;
+    playersTurn.playerOne = true;
   }
 }
 
+
+// Start Game Function
+var startGame = function () {
+  // Add click event listeners to each click event
+  for (var i = 0; i < squares.length; i++) {
+    squares[i].addEventListener('click', callback);
+  }
+  // Clear the winner
+  winner = '';
+}
+
+
+// Reset Game
+var resetGame = function () {
+  // Clear all squares
+  for (var i = 0; i < squares.length; i++) {
+    squares[i].innerHTML = '';
+  }
+  // Restart game by re-enabling added event listeners
+  startGame();
+}
+
+// Reset Button Event Listener
 resetButton.addEventListener('click', resetGame);
+
 
 // Check rows
 var checkRows = function (squares, currentPiece) {
@@ -37,6 +79,7 @@ var checkRows = function (squares, currentPiece) {
   }
 };
 
+
 // Check columns
 var checkColumns = function (squares, currentPiece) {
   for (var i = 0; i < 3; i++) {
@@ -47,6 +90,7 @@ var checkColumns = function (squares, currentPiece) {
     }
   }
 };
+
 
 // Check diagonals
 var checkDiagonal = function (squares, currentPiece) {
@@ -71,23 +115,12 @@ var checkWin = function (squares, currentPiece) {
   checkDiagonal(squares, currentPiece);
   if (winner) {
     alert('Player ' + winner + ' wins!');
+    for (var i = 0; i < squares.length; i++) {
+      squares[i].removeEventListener('click', callback);
+    }
+    return;
   }
 };
 
-// Add click event listener for each square and toggle each player's turn
-for (var i = 0; i < squares.length; i++) {
-  squares[i].addEventListener('click', function () {
-    if (playersTurn.playerOne && this.innerHTML === '') {
-      this.innerHTML = 'X';
-      checkWin(squares, this.innerHTML);
-      playersTurn.playerOne = false;
-      playersTurn.playerTwo = true;
-    } 
-    else if (playersTurn.playerTwo === true && this.innerHTML === '') {
-      this.innerHTML = 'O';
-      checkWin(squares, this.innerHTML);
-      playersTurn.playerTwo = false;
-      playersTurn.playerOne = true;
-    }
-  });
-}
+// Start Game
+startGame();
