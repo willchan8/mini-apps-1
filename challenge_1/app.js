@@ -6,6 +6,7 @@
 
 // Each square is identified by the tag name 'td'
 var squares = document.getElementsByTagName('td');
+var resetButton = document.getElementsByClassName('resetButton')[0];
 
 // Keep track of player's turn
 var playersTurn = {
@@ -13,55 +14,51 @@ var playersTurn = {
   playerTwo: false 
 };
 
+// Track the winner
+var winner = '';
+
+// Reset Game
+var resetGame = function () {
+  for (var i = 0; i < squares.length; i++) {
+    squares[i].innerHTML = '';
+  }
+}
+
+resetButton.addEventListener('click', resetGame);
+
 // Check rows
 var checkRows = function (squares, currentPiece) {
-  if (((squares[0].innerHTML === squares[1].innerHTML) && (squares[1].innerHTML === squares[2].innerHTML)) &&
-      ((squares[0].innerHTML !== '') && (squares[1].innerHTML !== '') && (squares[2].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
+  for (var i = 0; i < 9; i += 3) {
+    if (((squares[i].innerHTML === squares[i + 1].innerHTML) && (squares[i + 1].innerHTML === squares[i + 2].innerHTML)) &&
+        ((squares[i].innerHTML !== '') && (squares[i + 1].innerHTML !== '') && (squares[i + 2].innerHTML !== ''))) {
+        winner = currentPiece;
         return;
-      }
-  if (((squares[3].innerHTML === squares[4].innerHTML) && (squares[4].innerHTML === squares[5].innerHTML)) &&
-      ((squares[3].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[5].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
-        return;
-      }
-  if (((squares[6].innerHTML === squares[7].innerHTML) && (squares[7].innerHTML === squares[8].innerHTML)) &&
-      ((squares[6].innerHTML !== '') && (squares[7].innerHTML !== '') && (squares[8].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
-        return;
-      }
+    }
+  }
 };
 
 // Check columns
 var checkColumns = function (squares, currentPiece) {
-  if (((squares[0].innerHTML === squares[3].innerHTML) && (squares[3].innerHTML === squares[6].innerHTML)) &&
-      ((squares[0].innerHTML !== '') && (squares[3].innerHTML !== '') && (squares[6].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
+  for (var i = 0; i < 3; i++) {
+    if (((squares[i + 0].innerHTML === squares[i + 3].innerHTML) && (squares[i + 3].innerHTML === squares[i + 6].innerHTML)) &&
+        ((squares[i + 0].innerHTML !== '') && (squares[i + 3].innerHTML !== '') && (squares[i + 6].innerHTML !== ''))) {
+        winner = currentPiece;
         return;
-      }
-  if (((squares[1].innerHTML === squares[4].innerHTML) && (squares[4].innerHTML === squares[7].innerHTML)) &&
-      ((squares[1].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[7].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
-        return;
-      }
-  if (((squares[2].innerHTML === squares[5].innerHTML) && (squares[5].innerHTML === squares[8].innerHTML)) &&
-      ((squares[2].innerHTML !== '') && (squares[5].innerHTML !== '') && (squares[8].innerHTML !== ''))) {
-        alert(currentPiece + ' is the winner!');
-        return;
-      }
+    }
+  }
 };
 
-// Check diagonal
+// Check diagonals
 var checkDiagonal = function (squares, currentPiece) {
   if (((squares[0].innerHTML === squares[4].innerHTML) && (squares[4].innerHTML === squares[8].innerHTML)) &&
-  ((squares[0].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[8].innerHTML !== ''))) {
-    alert(currentPiece + ' is the winner!');
+    ((squares[0].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[8].innerHTML !== ''))) {
+    winner = currentPiece;
     return;
   }
 
   if (((squares[2].innerHTML === squares[4].innerHTML) && (squares[4].innerHTML === squares[6].innerHTML)) &&
-  ((squares[2].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[6].innerHTML !== ''))) {
-    alert(currentPiece + ' is the winner!');
+    ((squares[2].innerHTML !== '') && (squares[4].innerHTML !== '') && (squares[6].innerHTML !== ''))) {
+    winner = currentPiece;
     return;
   }
 };
@@ -72,6 +69,9 @@ var checkWin = function (squares, currentPiece) {
   checkRows(squares, currentPiece);
   checkColumns(squares, currentPiece);
   checkDiagonal(squares, currentPiece);
+  if (winner) {
+    alert('Player ' + winner + ' wins!');
+  }
 };
 
 // Add click event listener for each square and toggle each player's turn

@@ -1,5 +1,7 @@
 h1 {
-	text-align: center;
+  text-align: center;
+  padding: 20px;
+  font-size: 80px;
 }
 
 table {
@@ -7,10 +9,11 @@ table {
 }
 
 td {
-	width: 100px;
-  height: 100px;
-  text-align: center;
-  font-size: 30px;
+	width: 150px;
+	height: 150px;
+	text-align: center;
+	font-size: 50px;
+	background: #f1f1f1;
 }
 
 .horizontal {
@@ -24,6 +27,6 @@ td {
 }
 
 .resetButton {
-  padding: 20px;
   text-align: center;
+  padding: 40px;
 }

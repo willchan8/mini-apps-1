@@ -4,13 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
   <title>Tic-Tac-Toe</title>
 </head>
 <body>
   <h1>Tic-Tac-Toe</h1>
-    <table>
+    <table class="border">
       <tr>
         <td></td>
         <td class="vertical"></td>
@@ -30,7 +31,7 @@
       </tr>
     </table>
 
-    <div class="resetButton"><button onClick="window.location.reload()">Reset</button></div>
+    <div class="resetButton"><button class="btn btn-primary btn-lg">Reset</button></div>
   <script src="app.js"></script>
 </body>
 </html>
