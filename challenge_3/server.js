@@ -1,19 +1,25 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
+const db = require('./db');
 const PORT = 3000;
-// const db = require('./db');
 
 
 app.use(express.static('public'));
 
-// GET Route
+app.use(bodyParser.json());
+
+// POST Route
 // app.get(
 //   //TODO
 // )
 
-// // POST Route
-// app.post(
-//   //TODO
-// )
+// GET Route
+app.get('/test', (req, res) => {  
+  db.query("select * from userdata;", (err, data) => {
+  res.send(JSON.stringify(data[0].email));
+  console.log(data)}
+  )}
+)
 
 app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
