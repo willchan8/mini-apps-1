@@ -17,6 +17,6 @@ connection.connect(function(err) {
   console.log('Connected!');
 });
 
-// Export the connection object with contains methods to
-// connect, manipulate, and query the mysql database specified in the connection object
+// Export the connection object which contains methods to
+// manipulate, and query the mysql database specified in the connection object
 module.exports = connection;

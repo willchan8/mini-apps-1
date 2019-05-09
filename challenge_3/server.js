@@ -9,17 +9,29 @@ app.use(express.static('public'));
 
 app.use(bodyParser.json());
 
-// POST Route
-// app.get(
-//   //TODO
-// )
-
 // GET Route
 app.get('/test', (req, res) => {  
-  db.query("select * from userdata;", (err, data) => {
-  res.send(JSON.stringify(data[0].email));
-  console.log(data)}
+  db.query("SELECT * FROM userdata;", (err, data) => {
+    res.send(data[0]);
+    }
   )}
 )
 
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`))
+// POST Route
+app.post('/test', (req, res) => {
+  console.log("I am posting")
+  console.log(req.body.name);
+  // let postQuery = `INSERT INTO userdata (name, email, password) VALUES ("${req.body.name}", "${req.body.email}", "${req.body.password}");`
+  let postQuery = `INSERT INTO userdata (name, email, password) VALUES (?, ?, ?);`
+  let option = [req.body.name, req.body.email, req.body.password];
+  db.query(postQuery, option, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Successfully Posted userdata');
+    }
+  })
+  }
+)
+
+app.listen(PORT, () => console.log(`App is listening on port ${PORT}!`))

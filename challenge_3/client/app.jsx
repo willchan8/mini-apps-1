@@ -1,5 +1,3 @@
-
-
 class App extends React.Component {
   constructor (props) {
     super(props)
@@ -50,6 +48,8 @@ class FormOne extends React.Component {
     }
 
   this.handleChange = this.handleChange.bind(this);
+  this.handleSubmit = this.handleSubmit.bind(this);
+  this.postToDB = this.postToDB.bind(this);
   }
 
   handleChange (e) {
@@ -59,13 +59,33 @@ class FormOne extends React.Component {
     });
   }
 
-  // handleSubmit () {
-  //   this.props.changePage(2);
-  // }
+  postToDB() {
+    axios.post('/test', this.state)
+    .then(function (response) {
+      console.log(response);
+      console.log(typeof response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    // axios.get('/test')
+    // .then(function (response) {
+    //   console.log('response', response);
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+  }
+
+  handleSubmit () {
+    this.props.changePage(2);
+    console.log('posting...')
+    this.postToDB();
+  }
 
   render() {
     return (
-      <form onSubmit={ () => {this.props.changePage(2)} }>
+      <form onSubmit={this.handleSubmit}>
         <div>
           <label> Name
             <input name="name" value={this.state.name} onChange={this.handleChange} />
